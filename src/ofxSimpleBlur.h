@@ -95,8 +95,8 @@ class ofxSimpleBlur {
 			blurShader.setupShaderFromSource(GL_FRAGMENT_SHADER, fragSrc.str());
 			blurShader.bindDefaults();
 			blurShader.linkProgram();
-	
-			stringstream bloomFrag;
+				
+			/*stringstream bloomFrag;
 			bloomFrag << "#version 150\n";
 			bloomFrag << "uniform sampler2DRect origin;\n";
 			bloomFrag << "uniform sampler2DRect result;\n";
@@ -122,29 +122,7 @@ class ofxSimpleBlur {
 			bloomShader.setupShaderFromSource(GL_VERTEX_SHADER, vertSrc.str());
 			bloomShader.setupShaderFromSource(GL_FRAGMENT_SHADER, bloomFrag.str());
 			bloomShader.bindDefaults();
-			bloomShader.linkProgram();
-		}
-
-		void bloomDraw(int x, int y) {
-			bloomShader.begin();
-			bloomShader.setUniformTexture("origin", target.getTexture(), 0);
-			bloomShader.setUniformTexture("result", result.getTexture(), 1);
-			bloomShader.setUniform1f("strength", strength);
-
-			target.draw(x, y);
-
-			bloomShader.end();
-		}
-
-		void bloomDraw(int x, int y, int w, int h) {
-			bloomShader.begin();
-			bloomShader.setUniformTexture("origin", target.getTexture(), 0);
-			bloomShader.setUniformTexture("result", result.getTexture(), 1);
-			bloomShader.setUniform1f("strength", strength);
-
-			target.draw(x, y, w, h);
-
-			bloomShader.end();
+			bloomShader.linkProgram();*/
 		}
 
 		void debugFbo() {
@@ -160,10 +138,9 @@ class ofxSimpleBlur {
 		ofFbo getTarget() { return target; }
 
 		void setSize(float _size) { size = _size; }
-		void setStrength(float _strength) { strength = _strength; }
 	private:
 		float size, strength;
-		ofShader blurShader, bloomShader;
+		ofShader blurShade;
 		ofFbo target, onePassFbo, result;
 
 };
