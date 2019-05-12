@@ -1,1 +1,3 @@
 # ofxSimpleBlur
+
+![result](result.png)

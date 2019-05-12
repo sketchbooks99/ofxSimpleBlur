@@ -1,0 +1,17 @@
+﻿  main.cpp
+C:\Users\lunae\Desktop\of0.10.1\libs\openFrameworks\math\ofVec3f.h : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\lunae\Desktop\of0.10.1\libs\openFrameworks\math\ofVec2f.h : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\lunae\Desktop\of0.10.1\libs\openFrameworks\math\ofMatrix4x4.h(326): warning C4267: '引数': 'size_t' から 'int' に変換しました。データが失われているかもしれません。
+C:\Users\lunae\Desktop\of0.10.1\libs\openFrameworks\math\ofMatrix4x4.h(331): warning C4267: '引数': 'size_t' から 'int' に変換しました。データが失われているかもしれません。
+C:\Users\lunae\Desktop\of0.10.1\libs\openFrameworks\math\ofMatrix4x4.h(912): warning C4267: '引数': 'size_t' から 'int' に変換しました。データが失われているかもしれません。
+C:\Users\lunae\Desktop\of0.10.1\libs\openFrameworks\math\ofMatrix4x4.h(913): warning C4267: '引数': 'size_t' から 'int' に変換しました。データが失われているかもしれません。
+C:\Users\lunae\Desktop\of0.10.1\libs\openFrameworks\math\ofMatrix4x4.h(914): warning C4267: '引数': 'size_t' から 'int' に変換しました。データが失われているかもしれません。
+C:\Users\lunae\Desktop\of0.10.1\libs\openFrameworks\math\ofMatrix4x4.h(915): warning C4267: '引数': 'size_t' から 'int' に変換しました。データが失われているかもしれません。
+  simple-example.vcxproj -> C:\Users\lunae\Desktop\of0.10.1\addons\ofxSimpleBlur\example\simple-example\bin\simple-example_debug.exe
+  
+  	                   2	C:\Users\lunae\Desktop\of0.10.1\libs\fmodex\lib\vs\x64\
+  	  *EXTRA File 		 6942208	C:\Users\lunae\Desktop\of0.10.1\addons\ofxSimpleBlur\example\simple-example\bin\FreeImage.dll
+  
+  	                   1	C:\Users\lunae\Desktop\of0.10.1\libs\FreeImage\lib\vs\x64\
+  	  *EXTRA File 		 1503232	C:\Users\lunae\Desktop\of0.10.1\addons\ofxSimpleBlur\example\simple-example\bin\fmodex64.dll
+  	  *EXTRA File 		 1552384	C:\Users\lunae\Desktop\of0.10.1\addons\ofxSimpleBlur\example\simple-example\bin\fmodexL64.dll
