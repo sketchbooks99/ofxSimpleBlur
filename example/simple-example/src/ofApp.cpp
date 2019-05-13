@@ -4,10 +4,12 @@
 void ofApp::setup() {
 	ofBackground(0);
 
-	blur.allocate(ofGetWidth(), ofGetHeight());
-	blur.setSize(5.0);
-	blur.setStrength(1.0);
-	blur.setupShader();
+	bloom.allocate(ofGetWidth(), ofGetHeight());
+	bloom.setStrength(1.0);
+	bloom.setBlurSize(3.0);
+	bloom.setThreshold(0.5);
+	bloom.setupShaders();
+
 
 	box.set(300);
 
@@ -15,6 +17,7 @@ void ofApp::setup() {
 	gui.setPosition(10, 10);
 	gui.add(blurSize.set("blurSize", 5.0, 0.1, 20.0));
 	gui.add(strength.set("strength", 1.0, 0.1, 10.0));
+	gui.add(threshold.set("threshold", 0.5, 0.0, 1.0));
 
 	glLineWidth(10.0f);
 }
@@ -22,11 +25,12 @@ void ofApp::setup() {
 //--------------------------------------------------------------
 void ofApp::update() {
 	// set parameters 
-	blur.setSize(blurSize);
-	blur.setStrength(strength);
+	bloom.setBlurSize(blurSize);
+	bloom.setStrength(strength);
+	bloom.setThreshold(threshold);
 
-	// blur
-	blur.begin();
+	// bloom
+	bloom.begin();
 	ofEnableDepthTest();
 	cam.begin();
 
@@ -38,23 +42,19 @@ void ofApp::update() {
 	cam.end();
 	ofDisableDepthTest();
 
-	blur.end();
+	bloom.end();
 }
 
 //--------------------------------------------------------------
 void ofApp::draw() {
 	// debug horizontal/vertical blur and bloom result
-	switch (mode) {
-	case 0:
-		blur.draw(0, 0);
-		break;
-	case 1:
-		blur.bloomDraw(0, 0);
-		break;
-	case 2:
-		blur.debugFbo();
-		break;
-	}
+	bloom.draw(0, 0, ofGetWidth() / 2, ofGetHeight() / 2);
+	bloom.debugBlur(ofGetWidth() / 2, 0, ofGetWidth() / 2, ofGetHeight() / 2);
+	bloom.debugBrightness(0, ofGetHeight() / 2, ofGetWidth() / 2, ofGetHeight() / 2);
+
+	ofDrawBitmapString("RESULT", ofGetWidth() / 4, 20);
+	ofDrawBitmapString("BLUR", ofGetWidth() * 3 / 4, 20);
+	ofDrawBitmapString("THRESHOLD", ofGetWidth() / 4, ofGetHeight()/2 + 20);
 
 	gui.draw();
 }

@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "ofxSimpleBlur.h"
+#include "ofxBloom.h"
 #include "ofxGui.h"
 
 class ofApp : public ofBaseApp {
@@ -24,6 +25,7 @@ public:
 	void gotMessage(ofMessage msg);
 
 	ofxSimpleBlur blur;
+	ofxBloom bloom;
 
 	ofBoxPrimitive box;
 
@@ -32,6 +34,7 @@ public:
 	ofxPanel gui;
 	ofParameter<float> blurSize;
 	ofParameter<float> strength;
+	ofParameter<float> threshold;
 
 	int mode = 0;
 };

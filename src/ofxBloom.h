@@ -1,12 +1,11 @@
+#ifndef OFX_BLOOM
+#define OFX_BLOOM
+
 #include "ofMain.h"
 #include "ofxSimpleBlur.h"
 
 class ofxBloom {
 	public:
-		ofxBloom(float _threshold, float _strength) {
-			setThreshold(_threshold);
-			setStrength(_strength);
-		}
 
 		void allocate(int _width, int _height) {
 			target.allocate(_width, _height);
@@ -15,26 +14,25 @@ class ofxBloom {
 			blur.allocate(_width, _height);
 		}
 
-		begin() {
+		void begin() {
 			target.begin();
 			ofClear(0);
 			ofBackground(0);
 		}
 
-		end() {
+		void end() {
 			target.end();
 			
 			// limit brightness from Threshold
 			brightFbo.begin();
-			ofClear(0);
 
-			bloomShader.begin();
-			bloomShader.setUniform1f("threshold", threshold);
-			bloomShader.setUniformTexture("tex", target.getTexture(), 0);
+			brightShader.begin();
+			brightShader.setUniform1f("threshold", threshold);
+			brightShader.setUniformTexture("tex", target.getTexture(), 0);
 
 			target.draw(0, 0);
 
-			bloomShader.end();
+			brightShader.end();
 
 			brightFbo.end();
 
@@ -63,7 +61,7 @@ class ofxBloom {
 
 		// set some parameters
 		void setThreshold(float _threshold) {
-			if(_threshold < 0f)
+			if(_threshold < 0)
 				threshold = 0.0;
 			else if(_threshold > 1.0f)
 				threshold = 1.0;
@@ -86,8 +84,14 @@ class ofxBloom {
 			brightFbo.draw(x, y, w, h);
 		}
 
+		void debugBlur(float x, float y, float w, float h) {
+			blur.draw(x, y, w, h);
+		}
+
 		// setup
 		void setupShaders() {
+			blur.setupShader();
+
 			stringstream vertSrc;
 			vertSrc << "#version 150\n";
 			vertSrc << "uniform mat4 modelViewProjectionMatrix;\n";
@@ -106,8 +110,9 @@ class ofxBloom {
 			brightFrag << "uniform sampler2DRect tex;\n";
 			brightFrag << "uniform float threshold;\n";
 			brightFrag << "in vec2 vTexCoord;\n";
+			brightFrag << "out vec4 fragColor;\n";
 			brightFrag << "void main() {\n";
-			brightFrag << "		vec3 texel = max(vec3(0.0), (texture(tex, vTexCoord) - threshold).rgb);\n";
+			brightFrag << "		vec3 texel = texture(tex, vTexCoord).rgb - threshold;\n";
 			brightFrag << "		fragColor = vec4(texel, 1.0);\n";
 			brightFrag << "}\n";
 
@@ -125,9 +130,9 @@ class ofxBloom {
 			bloomFrag << "in vec2 vTexCoord;\n";
 			bloomFrag << "out vec4 fragColor;\n";
 			bloomFrag << "void main() {\n";
-			bloomFrag << "		vec4 ori = texture(origin, vTexCoord);
-			bloomFrag << "		vec4 blu = texture(blur, vTexCoord) * strength;
-			bloomFrag << "		fragColor = vec4(ori.rgb + blu.rgb, 1.0);
+			bloomFrag << "		vec4 ori = texture(origin, vTexCoord);\n";
+			bloomFrag << "		vec4 blu = texture(blur, vTexCoord) * strength;\n";
+			bloomFrag << "		fragColor = vec4(ori.rgb + blu.rgb, 1.0);\n";
 			bloomFrag << "}\n";
 
 			bloomShader.setupShaderFromSource(GL_VERTEX_SHADER, vertSrc.str());
@@ -142,5 +147,6 @@ class ofxBloom {
 		ofxSimpleBlur blur;
 		ofShader bloomShader, brightShader;
 		float threshold, strength; // threshold of brightness
-}
+};
 
+#endif

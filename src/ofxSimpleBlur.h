@@ -2,6 +2,9 @@
 // made by shunji kiuchi
 //
 
+#ifndef OFX_SIMPLE_BLUR
+#define OFX_SIMPLE_BLUR
+
 #include "ofMain.h"
 
 class ofxSimpleBlur {
@@ -95,34 +98,6 @@ class ofxSimpleBlur {
 			blurShader.setupShaderFromSource(GL_FRAGMENT_SHADER, fragSrc.str());
 			blurShader.bindDefaults();
 			blurShader.linkProgram();
-				
-			/*stringstream bloomFrag;
-			bloomFrag << "#version 150\n";
-			bloomFrag << "uniform sampler2DRect origin;\n";
-			bloomFrag << "uniform sampler2DRect result;\n";
-			bloomFrag << "uniform vec2 resolution;\n";
-			bloomFrag << "uniform float strength;\n";
-			bloomFrag << "in vec2 vTexCoord;\n";
-			bloomFrag << "out vec4 fragColor;\n";
-			bloomFrag << "";
-			bloomFrag << "void main() {\n";
-			bloomFrag << "	vec2 p = (vTexCoord * 2.0 - resolution) / min(resolution.x, resolution.y);\n";
-			bloomFrag << "	vec2 rOffset = vec2(2.0, 0.0);\n";
-			bloomFrag << "	vec2 bOffset = vec2(4.0, 0.0);\n";
-			bloomFrag << "	vec4 ori = texture(origin, vTexCoord);\n";
-			bloomFrag << "	vec4 res = texture(result, vTexCoord);\n";
-			bloomFrag << "	float rOri = texture(origin, vTexCoord + rOffset).r;\n";
-			bloomFrag << "	float rRes = texture(result, vTexCoord + rOffset).r;\n";
-			bloomFrag << "	float bOri = texture(origin, vTexCoord + bOffset).b;\n";
-			bloomFrag << "	float bRes = texture(result, vTexCoord + bOffset).b;\n";
-			bloomFrag << "	vec3 destColor = vec3(rOri, ori.g, bOri) + vec3(rRes, res.g, bRes) * strength;\n";
-			bloomFrag << "	fragColor = vec4(destColor, 1.0);\n";
-			bloomFrag << "}\n";
-
-			bloomShader.setupShaderFromSource(GL_VERTEX_SHADER, vertSrc.str());
-			bloomShader.setupShaderFromSource(GL_FRAGMENT_SHADER, bloomFrag.str());
-			bloomShader.bindDefaults();
-			bloomShader.linkProgram();*/
 		}
 
 		void debugFbo() {
@@ -131,16 +106,18 @@ class ofxSimpleBlur {
 			target.draw(0, 0, w, h);
 			onePassFbo.draw(w, 0, w, h);
 			result.draw(0, h, w, h);
-			bloomDraw(w, h, w, h);
 		}
 
 		ofFbo getResult() { return result; }
 		ofFbo getTarget() { return target; }
 
 		void setSize(float _size) { size = _size; }
+		float getSize() { return size; }
 	private:
-		float size, strength;
-		ofShader blurShade;
+		float size;
+		ofShader blurShader;
 		ofFbo target, onePassFbo, result;
 
 };
+
+#endif
